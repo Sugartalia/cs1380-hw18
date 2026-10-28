@@ -50,3 +50,19 @@ after free_log, pointer is NULL
 ==3057== 
 ==3057== For lists of detected and suppressed errors, rerun with: -s
 ==3057== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+git status:
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   weather.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+git log --oneline:
+5ac3c00 Add writeup with valgrind output
+667afbe Add author name to docstrings
+a7cc0b1 Add git output to weather.txt
+dcbefe0 Add writeup and valgrind output
+a127076 Add log helpers and demo
