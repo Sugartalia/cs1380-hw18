@@ -29,23 +29,24 @@ came from the realloc changes. A commit at the end would hide that.
 
 ~~~~~~~~~~~~~~Evidence~~~~~~~~~~~~~
 
-valgrind output:
-
-EOF
-
-sed -i "s/NAME_HERE/$NAME/" weather.txt
-
-gcc -Wall -Wextra -Wpedantic -std=c23 -o station main.c station.c
-valgrind --leak-check=full ./station >> weather.txt 2>&1
-
-git add .
-git commit -m "Add author name and writeup with valgrind output"
-
-printf '\ngit status:\n' >> weather.txt
-git status >> weather.txt
-printf '\ngit log --oneline:\n' >> weather.txt
-git log --oneline >> weather.txt
-
-git add weather.txt
-git commit -m "Add git output to weather.txt"
-git log --oneline
+==3057== Memcheck, a memory error detector
+==3057== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==3057== Using Valgrind-3.26.0 and LibVEX; rerun with -h for copyright info
+==3057== Command: ./station
+==3057== 
+start n=3: 68 71 64 
+after grow n=6: 68 71 64 72 70 67 
+max = 72
+after append n=8: 68 71 64 72 70 67 69 65 
+max = 72
+max_reading(NULL, 3) = 0
+after free_log, pointer is NULL
+==3057== 
+==3057== HEAP SUMMARY:
+==3057==     in use at exit: 0 bytes in 0 blocks
+==3057==   total heap usage: 5 allocs, 5 frees, 4,192 bytes allocated
+==3057== 
+==3057== All heap blocks were freed -- no leaks are possible
+==3057== 
+==3057== For lists of detected and suppressed errors, rerun with: -s
+==3057== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
