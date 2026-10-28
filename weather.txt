@@ -1,0 +1,31 @@
+HW18 weather.txt - Natalia Robertson
+
+~~~~~~~~~Part A questions~~~~~~~~~~
+
+1. If realloc fails, it returns NULL but the original memory is still there. If I assign NULL to log, I lose the pointer and can't free the memory anymore, which causes a leak. I should use a temporary pointer first.
+
+2. I have to assume the old address is no longer valid. I should only use the new pointer that realloc returns.
+
+3. A leak is when I don't free memory, use-after-free is when I use memory after freeing it, and double free is when I free the same memory twice. Both use-after-free and double free can cause crashes or mess up data.
+
+~~~~~~~~~~~~~~~Part B~~~~~~~~~~~~~~~~
+
+Hand trace (log starts at address A, grow_log succeeds and moves it to B):
+
+Pointer to use afterward: B
+Is it safe to read through A? No, because realloc moved the memory and the old address is no longer valid.
+When does free run (how many times, on which pointer)? Once on B when I'm done with it. I don't free A because realloc already handled it.
+
+4. After free_log(&log), the memory is already freed, so I can't use log[0] anymore. It might work sometimes, but the memory could be used for something else and cause problems. Setting log to NULL helps catch mistakes like this.
+
+5. calloc is better when I need the memory to start at zero. malloc doesn't do that. realloc is better when I need to grow an existing array because it keeps the old data and saves me from having to copy everything myself.
+
+== Part C ==
+
+6. Committing a working make_log / print_log first gives me something to go back to if realloc breaks something. It also makes it easier to figure out what went wrong.
+
+== Evidence ==
+
+valgrind output:
+
+git status:
