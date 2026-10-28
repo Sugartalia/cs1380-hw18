@@ -29,3 +29,16 @@ When does free run (how many times, on which pointer)? Once on B when I'm done w
 valgrind output:
 
 git status:
+
+git status:
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   weather.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+git log --oneline:
+dcbefe0 Add writeup and valgrind output
+a127076 Add log helpers and demo
