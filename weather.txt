@@ -18,27 +18,34 @@ When does free run (how many times, on which pointer)? Once on B when I'm done w
 
 4. After free_log(&log), the memory is already freed, so I can't use log[0] anymore. It might work sometimes, but the memory could be used for something else and cause problems. Setting log to NULL helps catch mistakes like this.
 
-5. calloc is better when I need the memory to start at zero. malloc doesn't do that. realloc is better when I need to grow an existing array because it keeps the old data and saves me from having to copy everything myself.
+   
+~~~~~~~~~~~~Part C~~~~~~~~~~~~~~~
 
-== Part C ==
+6. Why commit a working make_log / print_log before adding realloc?
 
-6. Committing a working make_log / print_log first gives me something to go back to if realloc breaks something. It also makes it easier to figure out what went wrong.
+It gives me a working version to go back to if adding realloc breaks
+something. It also makes the bug easier to find, because I know the problem
+came from the realloc changes. A commit at the end would hide that.
 
-== Evidence ==
+~~~~~~~~~~~~~~Evidence~~~~~~~~~~~~~
 
 valgrind output:
 
-git status:
+EOF
 
-git status:
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   weather.txt
+sed -i "s/NAME_HERE/$NAME/" weather.txt
 
-no changes added to commit (use "git add" and/or "git commit -a")
+gcc -Wall -Wextra -Wpedantic -std=c23 -o station main.c station.c
+valgrind --leak-check=full ./station >> weather.txt 2>&1
 
-git log --oneline:
-dcbefe0 Add writeup and valgrind output
-a127076 Add log helpers and demo
+git add .
+git commit -m "Add author name and writeup with valgrind output"
+
+printf '\ngit status:\n' >> weather.txt
+git status >> weather.txt
+printf '\ngit log --oneline:\n' >> weather.txt
+git log --oneline >> weather.txt
+
+git add weather.txt
+git commit -m "Add git output to weather.txt"
+git log --oneline
